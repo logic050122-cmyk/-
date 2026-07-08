@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+.DS_Store
+*.log
+
+# 视频素材体积较大，可以按需要选择是否提交
+# 生日蛋糕3.mp4
