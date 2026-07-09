@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "convert": "powershell -ExecutionPolicy Bypass -File scripts/convert-transparent.ps1",
+    "ensure-electron": "powershell -ExecutionPolicy Bypass -File scripts/ensure-electron.ps1",
+    "postinstall": "powershell -ExecutionPolicy Bypass -File scripts/ensure-electron.ps1",
+    "start": "npm.cmd run ensure-electron && electron ."
   },
   "devDependencies": {
     "electron": "^28.3.3"

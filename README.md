@@ -1,18 +1,18 @@
-# 生日蛋糕透明悬浮全屏版
+# 生日蛋糕透明悬浮特效
 
-这个项目用于在电脑屏幕上显示生日蛋糕透明悬浮特效。
+## 运行步骤
 
-特点：
+1. 安装 Node.js LTS：
 
-- 全屏透明悬浮层
-- 不使用普通浏览器窗口展示
-- 中间显示生日蛋糕视频
-- 保留粒子、星星、发光特效
-- 默认鼠标穿透，不影响原来打开的窗口
+```text
+https://nodejs.org/
+```
 
-## 第一次安装
+2. 下载或克隆这个项目。
 
-在项目目录执行：
+3. 在项目文件夹里打开 PowerShell。
+
+4. 安装依赖：
 
 ```powershell
 npm.cmd config set registry https://registry.npmmirror.com
@@ -20,33 +20,25 @@ $env:ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
 npm.cmd install
 ```
 
-## 运行
+安装时如果看到 `Electron 修复完成。` 是正常的，说明项目正在补齐 Electron。
+
+5. 启动特效：
 
 ```powershell
 npm.cmd run start
 ```
 
-或者在 VS Code 里打开“运行和调试”，选择：
+程序会自动播放完整生日蛋糕特效，约 13 秒后自动关闭。
 
-```text
-运行生日蛋糕透明悬浮版
+## 常见问题
+
+如果启动时报 Electron 安装不完整，执行：
+
+```powershell
+npm.cmd run ensure-electron
+npm.cmd run start
 ```
 
-## 快捷键
+如果还是失败，重新执行第 4 步的三行安装命令。
 
-```text
-Ctrl + Shift + Q   关闭程序
-Ctrl + Shift + M   切换鼠标穿透
-```
-
-## 文件说明
-
-```text
-package.json      项目依赖和启动命令
-main.js           Electron 主进程，负责创建透明悬浮窗口
-index.html        页面和特效代码
-生日蛋糕3.mp4     视频素材，需要放在项目根目录
-.vscode/          VS Code 调试配置
-```
-
-注意：如果你不想把 mp4 上传到 GitHub，可以自己把 `生日蛋糕3.mp4` 放到项目根目录。
+音乐文件是本地 `bgm.mp3`，不依赖网易云外链。

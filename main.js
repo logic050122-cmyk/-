@@ -1,8 +1,11 @@
-const { app, BrowserWindow, globalShortcut, screen } = require("electron");
+const { app, BrowserWindow, globalShortcut, screen, ipcMain } = require("electron");
 const path = require("path");
+
+app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
 
 let win = null;
 let ignoreMouse = true;
+let isQuitting = false;
 
 function createWindow() {
   const display = screen.getPrimaryDisplay();
@@ -24,7 +27,9 @@ function createWindow() {
     backgroundColor: "#00000000",
     webPreferences: {
       contextIsolation: true,
-      nodeIntegration: false
+      nodeIntegration: false,
+      preload: path.join(__dirname, "preload.js"),
+      backgroundThrottling: false
     }
   });
 
@@ -36,7 +41,16 @@ function createWindow() {
 
   // Ctrl + Shift + Q：关闭程序
   globalShortcut.register("CommandOrControl+Shift+Q", () => {
-    app.quit();
+    if (isQuitting) return;
+    isQuitting = true;
+
+    if (!win) {
+      app.quit();
+      return;
+    }
+
+    win.webContents.executeJavaScript("window.startExitAnimation && window.startExitAnimation();").catch(() => {});
+    setTimeout(() => app.quit(), 3100);
   });
 
   // Ctrl + Shift + M：切换鼠标穿透
@@ -54,6 +68,10 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow);
+
+ipcMain.on("app:close", () => {
+  app.quit();
+});
 
 app.on("will-quit", () => {
   globalShortcut.unregisterAll();
